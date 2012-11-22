@@ -31,7 +31,8 @@ class Controller_Admin_Articles extends Controller_Admin
 		if (Upload::is_valid())
 		{
 			Upload::save();
-			$filename = Upload::get_files(0)['saved_as'];
+                        $fileinfo = Upload::get_files(0);
+			$filename = $fileinfo['saved_as'];
 			
 			$result = array(
 				'filename' => $filename,
@@ -45,7 +46,7 @@ class Controller_Admin_Articles extends Controller_Admin
 	public function action_index()
 	{
 		$data['articles'] = Model_Article::find('all');
-		$this->template->title = "Articles";
+		$this->template->title = "文章";
 		$this->template->content = View::forge('admin/articles/index', $data);
 	}
 
@@ -69,10 +70,11 @@ class Controller_Admin_Articles extends Controller_Admin
 				$article = Model_Article::forge(array(
 					'title' => Input::post('title'),
 					'summary' => Input::post('summary'),
-					'clicked_num' => Input::post('clicked_num'),
-					'is_recommmended' => Input::post('is_recommmended'),
+					//'clicked_num' => Input::post('clicked_num', 0),
+					'is_recommmended' => Input::post('is_recommmended', 0) == 0 ? 0 : 1,
 					'img' => Input::post('img'),
 				));
+                                
 
 				if ($article and $article->save())
 				{
@@ -108,8 +110,8 @@ class Controller_Admin_Articles extends Controller_Admin
 		{
 			$article->title = Input::post('title');
 			$article->summary = Input::post('summary');
-			$article->clicked_num = Input::post('clicked_num');
-			$article->is_recommmended = Input::post('is_recommmended');
+			// $article->clicked_num = Input::post('clicked_num');
+			$article->is_recommmended = Input::post('is_recommmended', 0) === 0 ? 0 : 1;
 			$article->img = Input::post('img');
 
 			if ($article->save())
@@ -140,6 +142,8 @@ class Controller_Admin_Articles extends Controller_Admin
 
 			$this->template->set_global('article', $article, false);
 		}
+                
+                Package::load('CKEditor');
 
 		$this->template->title = "Articles";
 		$this->template->content = View::forge('admin/articles/edit');

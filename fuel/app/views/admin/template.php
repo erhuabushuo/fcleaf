@@ -39,15 +39,15 @@
 						
 						/*
 						 * 后台管理导航名称
-						 */
+						 
 						switch ($section_segment)
 						{
 							case 'articles':
 								$section_title = '文章';
 								break;
 						}
-						
-						// $section_title = Inflector::humanize($section_segment);
+						*/
+						$section_title = Inflector::humanize($section_segment);
 						?>
 
 	                <li class="<?php echo Uri::segment(2) == $section_segment ? 'active' : '' ?>">

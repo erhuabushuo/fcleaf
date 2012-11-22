@@ -1154,6 +1154,7 @@ class Model implements \ArrayAccess, \Iterator
 		$query = Query::forge(get_called_class(), static::connection());
 		$primary_key = static::primary_key();
 		$properties  = array_keys(static::properties());
+                
 		foreach ($properties as $p)
 		{
 			if ( ! (in_array($p, $primary_key) and is_null($this->{$p})))
@@ -1161,7 +1162,7 @@ class Model implements \ArrayAccess, \Iterator
 				$query->set($p, $this->{$p});
 			}
 		}
-
+                
 		// Insert!
 		$id = $query->insert();
 

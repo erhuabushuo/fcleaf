@@ -1,6 +1,4 @@
-<?php use Fuel\Core\Uri;
-
-echo Form::open(array('enctype' => 'multipart/form-data'), array('img' => isset($article) ? $article->img : '')); ?>
+<?php echo Form::open(array('enctype' => 'multipart/form-data'), array('img' => isset($article) ? $article->img : '')); ?>
 
 	<fieldset>
 		<div class="clearfix">
@@ -26,7 +24,7 @@ echo Form::open(array('enctype' => 'multipart/form-data'), array('img' => isset(
 			<?php echo Form::label('是否推荐', 'is_recommmended'); ?>
 
 			<div class="input">
-				<?php echo Form::checkbox('is_recommmended', Input::post('is_recommmended', isset($article) ? $article->is_recommmended : 0)) ?>
+				<?php echo Form::checkbox('is_recommmended', 1, Input::post('is_recommmended', isset($article) ? $article->is_recommmended : 0)) ?>
 			</div>
 		</div>
 		<div class="clearfix">
