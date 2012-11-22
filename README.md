@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #FuelPHP
 
 * Version: 1.4
@@ -40,3 +41,7 @@ The above command is the same as running:
 You can also shorten the last two commands to one:
 
     git submodule update --init
+=======
+fcleaf
+======
+>>>>>>> origin/master
