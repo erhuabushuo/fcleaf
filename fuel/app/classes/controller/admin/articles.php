@@ -78,14 +78,14 @@ class Controller_Admin_Articles extends Controller_Admin
 
 				if ($article and $article->save())
 				{
-					Session::set_flash('success', e('Added article #'.$article->id.'.'));
+					Session::set_flash('success', e('已添加文章 #'.$article->id.'.'));
 
 					Response::redirect('admin/articles');
 				}
 
 				else
 				{
-					Session::set_flash('error', e('Could not save article.'));
+					Session::set_flash('error', e('无法保存文章。'));
 				}
 			}
 			else
@@ -116,14 +116,14 @@ class Controller_Admin_Articles extends Controller_Admin
 
 			if ($article->save())
 			{
-				Session::set_flash('success', e('Updated article #' . $id));
+				Session::set_flash('success', e('已更新文章 #' . $id));
 
 				Response::redirect('admin/articles');
 			}
 
 			else
 			{
-				Session::set_flash('error', e('Could not update article #' . $id));
+				Session::set_flash('error', e('无法更新文章 #' . $id));
 			}
 		}
 
@@ -133,8 +133,8 @@ class Controller_Admin_Articles extends Controller_Admin
 			{
 				$article->title = $val->validated('title');
 				$article->summary = $val->validated('summary');
-				$article->clicked_num = $val->validated('clicked_num');
-				$article->is_recommmended = $val->validated('is_recommmended');
+				//$article->clicked_num = $val->validated('clicked_num');
+				//$article->is_recommmended = $val->validated('is_recommmended');
 				$article->img = $val->validated('img');
 
 				Session::set_flash('error', $val->error());
@@ -145,7 +145,7 @@ class Controller_Admin_Articles extends Controller_Admin
                 
                 Package::load('CKEditor');
 
-		$this->template->title = "Articles";
+		$this->template->title = "文章";
 		$this->template->content = View::forge('admin/articles/edit');
 
 	}

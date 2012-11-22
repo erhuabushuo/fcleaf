@@ -1,6 +1,6 @@
 <h2>文章列表</h2>
 <br>
-<?php echo Html::anchor('admin/articles/create', 'Add new Article', array('class' => 'btn btn-success')); ?>
+<?php echo Html::anchor('admin/articles/create', '添加', array('class' => 'btn btn-success')); ?>
 <?php if ($articles): ?>
 <table class="table table-striped">
 	<thead>
