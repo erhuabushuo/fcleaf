@@ -34,11 +34,11 @@ class Captcha
 		$code[] = mt_rand(1, 9);
 		$code[] = $operator{mt_rand(0, 2)};
 		$code[] = mt_rand(1, 9);
-		$code[] = $operator{mt_rand(0, 2)};
-		$code[] = mt_rand(1, 9);
+		//$code[] = $operator{mt_rand(0, 2)};
+		//$code[] = mt_rand(1, 9);
 		$codestr = implode('', $code);
 		eval("\$result = " . $codestr . ";");
-		$code[] = '=';
+		//$code[] = '=';
 		
 		\Session::set($session_name, $result);
 		

@@ -13,8 +13,6 @@
 		'bootstrap.js',
 		'bootstrap-tooltip.js',
 		'bootstrap-popover.js',
-		'ajaxupload.js',
-		'my.js',
 	)); ?>
 	<script>
 		$(function(){ $('.topbar').dropdown(); });
@@ -101,5 +99,6 @@
 			</p>
 		</footer>
 	</div>
+	<?php if (isset($scripts)) echo $scripts; ?>
 </body>
 </html>

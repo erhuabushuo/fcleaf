@@ -3,12 +3,13 @@ class Model_Article extends \Orm\Model
 {
 	protected static $_properties = array(
 		'id',
+		'category_id',
 		'title',
 		'summary',
 		'clicked_num' => array(
                     'default' => 0,
                 ),
-		'is_recommmended' => array(
+		'is_recommended' => array(
                     'default' => 0,
                 ),
 		'img',
@@ -32,9 +33,9 @@ class Model_Article extends \Orm\Model
 		$val = Validation::forge($factory);
 		$val->add_field('title', 'Title', 'required|max_length[255]');
 		$val->add_field('summary', 'Summary', 'required');
-		//$val->add_field('clicked_num', 'Clicked Num', 'required|valid_string[numeric]');
-		//$val->add_field('is_recommmended', 'Is Recommmended', 'required');
-		$val->add_field('img', 'Img', 'required|max_length[255]');
+		$val->add_field('category_id', 'Category', 'required|valid_string[numeric]');
+		//$val->add_field('is_recommended', 'Is Recommmended', 'required');
+		//$val->add_field('img', 'Img', 'required|max_length[255]');
 
 		return $val;
 	}

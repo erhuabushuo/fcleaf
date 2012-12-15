@@ -483,6 +483,10 @@ class Model implements \ArrayAccess, \Iterator
 		// Return Query object
 		if (is_null($id))
 		{
+			if (func_num_args() === 1)
+			{
+				throw new \FuelException('Invalid method call.  You need to specify a key value.', 0);
+			}
 			return static::query($options);
 		}
 		// Return all that match $options array
@@ -1154,7 +1158,6 @@ class Model implements \ArrayAccess, \Iterator
 		$query = Query::forge(get_called_class(), static::connection());
 		$primary_key = static::primary_key();
 		$properties  = array_keys(static::properties());
-                
 		foreach ($properties as $p)
 		{
 			if ( ! (in_array($p, $primary_key) and is_null($this->{$p})))
@@ -1162,7 +1165,7 @@ class Model implements \ArrayAccess, \Iterator
 				$query->set($p, $this->{$p});
 			}
 		}
-                
+
 		// Insert!
 		$id = $query->insert();
 
@@ -1577,7 +1580,7 @@ class Model implements \ArrayAccess, \Iterator
 
 
 	/**
-	 * Allow populating this object from an array
+	 * Allow populating this object from an array, and any related objects
 	 *
 	 * @return  array
 	 */
@@ -1588,6 +1591,19 @@ class Model implements \ArrayAccess, \Iterator
 			if (array_key_exists($property, static::properties()) and ! in_array($property, static::primary_key()))
 			{
 				$this->_data[$property] = $value;
+			}
+			elseif (array_key_exists($property, static::relations()) and is_array($value))
+			{
+				foreach($value as $id => $data)
+				{
+					if (array_key_exists($id, $this->_data_relations[$property]) and is_array($data))
+					{
+						foreach($data as $field => $contents)
+						{
+							$this->_data_relations[$property][$id]->{$field} = $contents;
+						}
+					}
+				}
 			}
 		}
 	}

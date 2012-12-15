@@ -10,6 +10,17 @@
 			</div>
 		</div>
 		<div class="clearfix">
+			<?php echo Form::label('文章分类', 'type'); ?>
+	
+			<div class="input">
+				<select id="form_category_id" name="category_id">
+					<?php foreach($categories as $item): ?>
+					<option value="<?php echo $item["id"]; ?>" <?php if (isset($article) and $article->category_id == $item["id"]) echo 'selected="selected"'; ?>><?php echo str_repeat('&nbsp;&nbsp;&nbsp;', substr_count($item['structs'], '-')); ?><?php echo $item['title']; ?></option>
+					<?php endforeach; ?>
+				</select>
+			</div>
+		</div>
+		<div class="clearfix">
 			<?php echo Form::label('文章图片', 'img'); ?>
 
 			<div class="input">
@@ -21,10 +32,10 @@
 			</div>
 		</div>
 		<div class="clearfix">
-			<?php echo Form::label('是否推荐', 'is_recommmended'); ?>
+			<?php echo Form::label('是否推荐', 'is_recommended'); ?>
 
 			<div class="input">
-				<?php echo Form::checkbox('is_recommmended', 1, Input::post('is_recommmended', isset($article) ? $article->is_recommmended : 0)) ?>
+				<?php echo Form::checkbox('is_recommended', 1, Input::post('is_recommended', isset($article) ? $article->is_recommended : 0)) ?>
 			</div>
 		</div>
 		<div class="clearfix">
