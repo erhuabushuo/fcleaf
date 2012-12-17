@@ -6,7 +6,7 @@ class Controller_Admin_Categories extends Controller_Admin
 	public function action_index()
 	{
 		$data = array();
-		$categories = Model_Category::getAllCategories()->as_array();
+		$categories = Model_Category::getAll()->as_array();
 		$data['categories'] = $categories;
 		$data['types']      = Model_Category::$_types;
 		$this->template->title = "分类";
@@ -36,7 +36,7 @@ class Controller_Admin_Categories extends Controller_Admin
 					else
 					{
 						$parent_category = Model_Category::find($category->pid);
-						$category->struct = $parent_category->struct . '-' . $category->id;
+						$category->struct = $parent_category->struct . '-' . $category->pid;
 					}
 					if ($category and $category->save())
 					{
@@ -90,7 +90,7 @@ class Controller_Admin_Categories extends Controller_Admin
 				else
 				{
 					$parent_category = Model_Category::find($category->pid);
-					$category->struct = $parent_category->struct . '-' . $category->id;
+					$category->struct = $parent_category->struct . '-' . $category->pid;
 				}
 				if ($category and $category->save())
 				{

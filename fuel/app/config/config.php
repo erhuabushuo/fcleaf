@@ -26,7 +26,6 @@ return array(
 				'packages'  => array(
 						'orm',
 						'auth',
-						// 'recaptcha',
 				),
 		),
 		'security' => array(

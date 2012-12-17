@@ -38,6 +38,15 @@ class Model_Category extends \Orm\Model
 		return $result;
 	}
 	
+	public static function getAll()
+	{
+		$sql = "SELECT `id`, `title`, `pid`, `order`, `type`,
+		concat(`struct`, '-', `id`) as `structs` , `created_at`, `updated_at`
+		FROM `categories` order by `structs` asc, `order` asc";
+		$result = DB::query($sql)->execute();
+		return $result;
+	}
+	
 	public static function validate($factory)
 	{
 		$val = Validation::forge($factory);
