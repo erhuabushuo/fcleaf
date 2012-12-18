@@ -1,16 +1,15 @@
-<h2>Listing Products</h2>
+<h2>产品列表</h2>
 <br>
+	<?php echo Html::anchor('admin/products/create', '添加', array('class' => 'btn btn-success')); ?>
 <?php if ($products): ?>
 <table class="table table-striped">
 	<thead>
 		<tr>
-			<th>Title</th>
-			<th>Category id</th>
-			<th>Price</th>
-			<th>Is recommend</th>
-			<th>Click num</th>
-			<th>Img</th>
-			<th>Summary</th>
+			<th>标题</th>
+			<th>分类</th>
+			<th>价格</th>
+			<th>推荐</th>
+			<th>访问次数</th>
 			<th></th>
 		</tr>
 	</thead>
@@ -18,26 +17,30 @@
 <?php foreach ($products as $product): ?>		<tr>
 
 			<td><?php echo $product->title; ?></td>
-			<td><?php echo $product->category_id; ?></td>
+			<td><?php echo $product->category->title; ?></td>
 			<td><?php echo $product->price; ?></td>
-			<td><?php echo $product->is_recommended; ?></td>
-			<td><?php echo $product->click_num; ?></td>
-			<td><?php echo $product->img; ?></td>
-			<td><?php echo $product->summary; ?></td>
 			<td>
-				<?php echo Html::anchor('admin/products/view/'.$product->id, 'View'); ?> |
-				<?php echo Html::anchor('admin/products/edit/'.$product->id, 'Edit'); ?> |
-				<?php echo Html::anchor('admin/products/delete/'.$product->id, 'Delete', array('onclick' => "return confirm('Are you sure?')")); ?>
+                            <?php if ($product->is_recommended): ?>
+                            <i class="icon-ok"></i>
+                            <?php else: ?>
+                            <i class="icon-remove"></i>
+                            <?php endif; ?>
+                        </td>
+			<td><?php echo $product->click_num; ?></td>
+			<td>
+				<?php echo Html::anchor('admin/products/view/'.$product->id, '查看'); ?> |
+				<?php echo Html::anchor('admin/products/edit/'.$product->id, '编辑'); ?> |
+				<?php echo Html::anchor('admin/products/delete/'.$product->id, '删除', array('onclick' => "return confirm('你确定?')")); ?>
 
 			</td>
 		</tr>
 <?php endforeach; ?>	</tbody>
 </table>
-
+Dashboard
 <?php else: ?>
-<p>No Products.</p>
+<p>没有产品.</p>
 
 <?php endif; ?><p>
-	<?php echo Html::anchor('admin/products/create', 'Add new Product', array('class' => 'btn btn-success')); ?>
+
 
 </p>

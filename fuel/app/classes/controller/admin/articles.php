@@ -53,7 +53,7 @@ class Controller_Admin_Articles extends Controller_Admin
 			'uri_segment' => 4,
 		);
 		$pagination = Pagination::forge('pagination', $config);
-		$data['articles'] = Model_Article::find()->order_by('id', 'desc')->limit($pagination->per_page)->offset($pagination->offset)->get();
+		$data['articles'] = Model_Article::find()->related('category')->order_by('id', 'desc')->limit($pagination->per_page)->offset($pagination->offset)->get();
 		$this->template->set_global('pagination', $pagination->render(), false);
 		$this->template->title = "文章";
 		$this->template->content = View::forge('admin/articles/index', $data);

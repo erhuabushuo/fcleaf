@@ -6,6 +6,7 @@
 	<thead>
 		<tr>
 			<th>标题</th>
+			<th>分类</th>
 			<th>访问次数</th>
 			<th>是否推荐</th>
 			<th>添加时间</th>
@@ -17,6 +18,7 @@
 <?php foreach ($articles as $article): ?>		<tr>
 
 			<td><?php echo $article->title; ?></td>
+			<td><?php echo $article->category->title; ?></td>
 			<td><?php echo $article->clicked_num; ?></td>
 			<td>
                             <?php if ($article->is_recommended): ?>

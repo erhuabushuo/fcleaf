@@ -45,8 +45,16 @@ class Controller_Admin_Products extends Controller_Admin
 
 	public function action_index()
 	{
-		$data['products'] = Model_Product::find('all');
-		$this->template->title = "Products";
+		$config = array(
+				'pagination_url' => \Uri::base().'admin/products/index/',
+				'total_items' => Model_Product::find()->count(),
+				'per_page' => 20,
+				'uri_segment' => 4,
+		);
+		$pagination = Pagination::forge('pagination', $config);
+		$data['products'] = Model_Product::find()->related('category')->order_by('id', 'desc')->limit($pagination->per_page)->offset($pagination->offset)->get();
+		$this->template->set_global('pagination', $pagination->render(), false);
+		$this->template->title = "产品";
 		$this->template->content = View::forge('admin/products/index', $data);
 
 	}
@@ -114,21 +122,20 @@ class Controller_Admin_Products extends Controller_Admin
 			$product->title = Input::post('title');
 			$product->category_id = Input::post('category_id');
 			$product->price = Input::post('price');
-			$product->is_recommended = Input::post('is_recommended');
-			$product->click_num = Input::post('click_num');
+			$product->is_recommended = Input::post('is_recommended', 0) == 0 ? 0 : 1;
 			$product->img = Input::post('img');
 			$product->summary = Input::post('summary');
 
 			if ($product->save())
 			{
-				Session::set_flash('success', e('Updated product #' . $id));
+				Session::set_flash('success', e('已更新产品 #' . $product->title));
 
 				Response::redirect('admin/products');
 			}
 
 			else
 			{
-				Session::set_flash('error', e('Could not update product #' . $id));
+				Session::set_flash('error', e('无法更新产品 #' . $product->title));
 			}
 		}
 
@@ -139,11 +146,9 @@ class Controller_Admin_Products extends Controller_Admin
 				$product->title = $val->validated('title');
 				$product->category_id = $val->validated('category_id');
 				$product->price = $val->validated('price');
-				$product->is_recommended = $val->validated('is_recommended');
-				$product->click_num = $val->validated('click_num');
+				$product->is_recommended = $val->validated('is_recommended', 0) == 0 ? 0 : 1;
 				$product->img = $val->validated('img');
 				$product->summary = $val->validated('summary');
-
 				Session::set_flash('error', $val->error());
 			}
 
@@ -152,7 +157,7 @@ class Controller_Admin_Products extends Controller_Admin
 		Package::load('CKEditor');
 		$categories = Model_Category::getAllCategories(array_search('产品', Model_Category::$_types))->as_array();
 		$this->template->set_global('categories', $categories, false);
-		$this->template->title = "Products";
+		$this->template->title = "产品";
 		$this->template->content = View::forge('admin/products/edit');
 		$this->template->set_global('scripts', Asset::js(array('ajaxupload.js','my.js')), false);
 	}

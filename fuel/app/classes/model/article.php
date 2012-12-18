@@ -16,6 +16,16 @@ class Model_Article extends \Orm\Model
 		'created_at',
 		'updated_at',
 	);
+	
+	protected static $_belongs_to = array(
+			'category' => array(
+					'key_from' => 'category_id',
+					'model_to' => 'Model_Category',
+					'key_to' => 'id',
+					'cascade_save' => false,
+					'cascade_delete' => false,
+			),
+	);
 
 	protected static $_observers = array(
 		'Orm\Observer_CreatedAt' => array(

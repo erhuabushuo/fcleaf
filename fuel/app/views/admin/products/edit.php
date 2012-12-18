@@ -1,4 +1,4 @@
-<h2>Editing Product</h2>
+<h2>编辑产品</h2>
 <br>
 
 <?php echo render('admin/products/_form'); ?>
