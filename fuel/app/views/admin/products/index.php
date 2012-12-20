@@ -36,7 +36,6 @@
 		</tr>
 <?php endforeach; ?>	</tbody>
 </table>
-Dashboard
 <?php else: ?>
 <p>没有产品.</p>
 

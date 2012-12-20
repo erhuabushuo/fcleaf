@@ -166,14 +166,14 @@ class Controller_Admin_Products extends Controller_Admin
 	{
 		if ($product = Model_Product::find($id))
 		{
+			$name = $product->title;
 			$product->delete();
 
-			Session::set_flash('success', e('Deleted product #'.$id));
+			Session::set_flash('success', e('成功删除产品：'.$name));
 		}
-
 		else
 		{
-			Session::set_flash('error', e('Could not delete product #'.$id));
+			Session::set_flash('error', e('无法删除产品 #'.$id));
 		}
 
 		Response::redirect('admin/products');

@@ -27,6 +27,7 @@ class Model_Category extends \Orm\Model
 	public static $_types = array(
 		'文章',
 		'产品',		
+		'软件',
 	);
 	
 	public static function getAllCategories($type = 0)

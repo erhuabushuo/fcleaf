@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- 主机: localhost
--- 生成日期: 2012 年 12 月 18 日 14:37
+-- 生成日期: 2012 年 12 月 20 日 15:16
 -- 服务器版本: 5.5.25a
 -- PHP 版本: 5.4.4
 
@@ -109,7 +109,8 @@ INSERT INTO `migration` (`type`, `name`, `migration`) VALUES
 ('app', 'default', '002_create_articles'),
 ('app', 'default', '003_upgrade'),
 ('app', 'default', '004_create_categories'),
-('app', 'default', '005_create_products');
+('app', 'default', '005_create_products'),
+('app', 'default', '006_create_softwares');
 
 -- --------------------------------------------------------
 
@@ -129,19 +130,36 @@ CREATE TABLE IF NOT EXISTS `products` (
   `created_at` int(11) NOT NULL,
   `updated_at` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=6 ;
 
 --
 -- 转存表中的数据 `products`
 --
 
 INSERT INTO `products` (`id`, `title`, `category_id`, `price`, `is_recommended`, `click_num`, `img`, `summary`, `created_at`, `updated_at`) VALUES
-(1, 'ggg', 12, 1.00, 0, 0, '0', '<p>\r\n	ggg</p>\r\n', 1355756817, 1355756817),
 (2, 'ggg', 12, 1.00, 1, 0, '4939', '<p>\r\n	ggg</p>\r\n', 1355756873, 1355756873),
 (3, 'ggg', 12, 1.00, 1, 0, '4939', '<p>\r\n	ggg</p>\r\n', 1355756888, 1355756888),
 (4, '再测试产品分类', 11, 22.00, 1, 0, '37', '<p>\r\n	fff</p>\r\n', 1355757117, 1355757117),
-(5, '再测试产品分类', 11, 2.00, 0, 0, '16a3ed8145919e42a8e87201059321cb.png', '<p>\r\n	111</p>\r\n', 1355757237, 1355836422),
-(6, 'fdsfsdfsdf', 12, 1.00, 1, 0, '64722abc3bc1aa796901e160a0ecf7f0.jpg', '<p>\r\n	ewewe</p>\r\n', 1355836329, 1355836329);
+(5, '再测试产品分类', 11, 2.00, 0, 0, '16a3ed8145919e42a8e87201059321cb.png', '<p>\r\n	111</p>\r\n', 1355757237, 1355836422);
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `softwares`
+--
+
+CREATE TABLE IF NOT EXISTS `softwares` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) NOT NULL,
+  `category_id` int(11) NOT NULL,
+  `file` varchar(255) NOT NULL,
+  `is_recommended` tinyint(1) NOT NULL,
+  `img` varchar(255) NOT NULL,
+  `summary` text NOT NULL,
+  `created_at` int(11) NOT NULL,
+  `updated_at` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -168,7 +186,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 --
 
 INSERT INTO `users` (`id`, `username`, `password`, `group`, `email`, `last_login`, `login_hash`, `profile_fields`, `created_at`, `updated_at`) VALUES
-(1, 'admin', 'YWqmPGH+dOEvOh6pf83a62lzJ1QQLHRMPHhNIaohB3s=', 100, 'erhuabushuo@gmail.com', 1355835758, '62727fc82bd4b06dff96b54f9435010264880a6a', 'a:0:{}', 1352641423, 0);
+(1, 'admin', 'YWqmPGH+dOEvOh6pf83a62lzJ1QQLHRMPHhNIaohB3s=', 100, 'erhuabushuo@gmail.com', 1356011674, '3682eaf3c8f6a4cce93953f8cfb44a5ddaa874ed', 'a:0:{}', 1352641423, 0);
 
 --
 -- 限制导出的表
