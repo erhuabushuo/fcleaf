@@ -54,7 +54,7 @@
 			</div>
 		</div>
 		<div class="actions">
-			<?php echo Form::submit('submit', 'Save', array('class' => 'btn btn-primary')); ?>
+			<?php echo Form::submit('submit', '保存', array('class' => 'btn btn-primary')); ?>
 
 		</div>
 	</fieldset>

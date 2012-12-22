@@ -15,6 +15,7 @@
 		'bootstrap-popover.js',
 	)); ?>
 	<script>
+                window.root = '<?php echo Uri::base(); ?>';
 		$(function(){ $('.topbar').dropdown(); });
 	</script>
 </head>

@@ -42,6 +42,51 @@ class Controller_Admin_Softwares extends Controller_Admin
 	
 		return new Response(json_encode($result));
 	}
+        
+        public function action_async_upload()
+        {
+                $path = DOCROOT . DS . 'upload' . DS .'storehouse';
+                $subdir = date("Y-M-d");
+                $subpath = $path . DS . $subdir;
+		if (!is_dir($path))
+		{
+			try
+			{
+				File::create_dir(DOCROOT . DS . 'upload', 'storehouse', 0777);
+                                if (!is_dir($subpath))
+                                    File::create_dir($path, $subdir, 0777);
+			}
+			catch (InvalidPathException $e)
+			{
+				// Basepath does not exist or is not writable
+			}
+			catch (FileAccessException $e)
+			{
+				// Basepath is not writable
+			}
+		}
+		$config = array(
+				'path'		 => $subpath,
+				'randomize' => true,
+				'ext_whitelist' => array('img', 'jpg', 'jpeg', 'gif', 'png'),
+		);
+	
+		Upload::process($config);
+	
+		if (Upload::is_valid())
+		{
+			Upload::save();
+			$fileinfo = Upload::get_files(0);
+			$filename = $fileinfo['saved_as'];
+	
+			$result = array(
+					'filename' => $subdir . DS . $filename,
+					'urlpath'  => Uri::base() . DS . 'upload' . DS .  'storehouse' . DS . $subdir . DS . $filename,
+			);
+		}
+	
+		return new Response(json_encode($result));
+        }
 	
 	public function action_index()
 	{
@@ -97,7 +142,10 @@ class Controller_Admin_Softwares extends Controller_Admin
 		Package::load('CKEditor');
 		$categories = Model_Category::getAllCategories(array_search('软件', Model_Category::$_types))->as_array();
 		$this->template->set_global('categories', $categories, false);
-		$this->template->set_global('scripts', Asset::js(array('ajaxupload.js','my.js')), false);
+                $scripts = Asset::js(array('ajaxupload.js', 'swfupload.js', 'jquery-asyncUpload-0.1.js','my.js'));
+                $upload_js = View::forge('admin/softwares/async_upload');
+                $all_scripts = $scripts . $upload_js;
+		$this->template->set_global('scripts', $all_scripts, false);
 		$this->template->title = "软件";
 		$this->template->content = View::forge('admin/softwares/create');
 		

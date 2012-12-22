@@ -15,6 +15,7 @@ jQuery(function($) {
 			$upload_info.text(response.filename).attr('data-content', "<img src='" + response.urlpath +"' />");
 		}
 	});
-	
+        
+
 	
 });
