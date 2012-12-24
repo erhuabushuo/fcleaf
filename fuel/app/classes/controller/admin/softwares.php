@@ -2,6 +2,11 @@
 class Controller_Admin_Softwares extends Controller_Admin 
 {
 
+        public function action_testupload()
+        {
+            return new Response(1);
+        }
+    
 	public function action_upload()
 	{
 		$path = DOCROOT . DS . 'upload' . DS .'softwares';
@@ -87,6 +92,13 @@ class Controller_Admin_Softwares extends Controller_Admin
 	
 		return new Response(json_encode($result));
         }
+        
+        public function action_test()
+        {
+            $data = array();
+            $this->template->title = "测试上传";
+            $this->template->content = View::forge("admin/softwares/test", $data);
+        }
 	
 	public function action_index()
 	{
@@ -99,9 +111,8 @@ class Controller_Admin_Softwares extends Controller_Admin
 	public function action_view($id = null)
 	{
 		$data['software'] = Model_Software::find($id);
-
 		$this->template->title = "Software";
-		$this->template->content = View::forge('admin/softwares/view', $data);
+		$this->template->content = View::forge('admin/softwares/test', $data);
 
 	}
 
