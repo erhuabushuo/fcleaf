@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 3.5.2
+-- version 3.4.5
 -- http://www.phpmyadmin.net
 --
 -- 主机: localhost
--- 生成日期: 2012 年 12 月 20 日 15:16
--- 服务器版本: 5.5.25a
--- PHP 版本: 5.4.4
+-- 生成日期: 2013 年 01 月 22 日 12:23
+-- 服务器版本: 5.5.16
+-- PHP 版本: 5.3.8
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -67,7 +67,7 @@ CREATE TABLE IF NOT EXISTS `categories` (
   `created_at` int(11) NOT NULL,
   `updated_at` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=14 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=16 ;
 
 --
 -- 转存表中的数据 `categories`
@@ -86,7 +86,9 @@ INSERT INTO `categories` (`id`, `pid`, `type`, `title`, `struct`, `order`, `crea
 (10, 9, 1, '测试产品分类2', '9-9', 1, 1355627626, 1355627626),
 (11, 10, 1, '111', '9-9-11', 0, 1355627946, 1355627946),
 (12, 0, 1, '再测试产品分类', '12', 0, 1355628070, 1355628070),
-(13, 12, 1, '再测试产品分类1', '12-12', 1, 1355628086, 1355628086);
+(13, 12, 1, '再测试产品分类1', '12-12', 1, 1355628086, 1355628086),
+(14, 0, 2, '厕所搜索', '14', 1, 1356502716, 1356502716),
+(15, 14, 2, '顶顶顶顶', '14-14', 1, 1356502740, 1356502740);
 
 -- --------------------------------------------------------
 
@@ -156,10 +158,19 @@ CREATE TABLE IF NOT EXISTS `softwares` (
   `is_recommended` tinyint(1) NOT NULL,
   `img` varchar(255) NOT NULL,
   `summary` text NOT NULL,
+  `click_num` int(11) NOT NULL,
   `created_at` int(11) NOT NULL,
   `updated_at` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+
+--
+-- 转存表中的数据 `softwares`
+--
+
+INSERT INTO `softwares` (`id`, `title`, `category_id`, `file`, `is_recommended`, `img`, `summary`, `click_num`, `created_at`, `updated_at`) VALUES
+(1, '大幅度发', 15, '', 1, '', '<p>\r\n	方法发</p>\r\n', 0, 1356502753, 1357469317),
+(2, 'dd', 15, '', 0, '08dab5bea962c7cdfe6e5ec30e2a4b2d.jpg', '<p>\r\n	dd</p>\r\n', 0, 1357469743, 1357469743);
 
 -- --------------------------------------------------------
 
@@ -186,7 +197,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 --
 
 INSERT INTO `users` (`id`, `username`, `password`, `group`, `email`, `last_login`, `login_hash`, `profile_fields`, `created_at`, `updated_at`) VALUES
-(1, 'admin', 'YWqmPGH+dOEvOh6pf83a62lzJ1QQLHRMPHhNIaohB3s=', 100, 'erhuabushuo@gmail.com', 1356011674, '3682eaf3c8f6a4cce93953f8cfb44a5ddaa874ed', 'a:0:{}', 1352641423, 0);
+(1, 'admin', 'YWqmPGH+dOEvOh6pf83a62lzJ1QQLHRMPHhNIaohB3s=', 100, 'erhuabushuo@gmail.com', 1358146634, '2f4c7cc2916eff33c8a985b4ade1087a4985ba40', 'a:0:{}', 1352641423, 0);
 
 --
 -- 限制导出的表
