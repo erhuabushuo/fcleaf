@@ -14,6 +14,7 @@ class Create_softwares
 			'is_recommended' => array('constraint' => 1, 'type' => 'tinyint'),
 			'img' => array('constraint' => 255, 'type' => 'varchar'),
 			'summary' => array('type' => 'text'),
+                        'click_num' => array('constraint' => 11, 'type' => 'int'),
 			'created_at' => array('constraint' => 11, 'type' => 'int'),
 			'updated_at' => array('constraint' => 11, 'type' => 'int'),
 

@@ -50,10 +50,12 @@ class Asset
 		'img_dir' => 'img/',
 		'js_dir' => 'js/',
 		'css_dir' => 'css/',
+                'swf_dir' => 'swf/',
 		'folders' => array(
 			'css' => array(),
 			'js'  => array(),
 			'img' => array(),
+                        'swf' => array(),
 		),
 		'url' => '/',
 		'add_mtime' => true,

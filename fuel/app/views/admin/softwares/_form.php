@@ -1,4 +1,4 @@
-<?php echo Form::open(array(), array('img' => isset($software) ? $software->img : '')); ?>
+<?php echo Form::open(array(), array('img' => isset($software) ? $software->img : '', 'file' => isset($software) ? $software->file: '' )); ?>
 
 	<fieldset>
 		<div class="clearfix">
@@ -24,9 +24,8 @@
 			<?php echo Form::label('软件地址', 'file'); ?>
 
 			<div class="input">
-				<?php echo Form::input('file', Input::post('file', isset($software) ? $software->file : ''), array('class' => 'span4')); ?>
-
-			</div>
+				<?php echo Form::input('file', Input::post('file', isset($software) ? $software->file : ''), array('class' => 'span4', 'id' => 'async_upload')); ?>
+                        </div>
 		</div>
 		<div class="clearfix">
 			<?php echo Form::label('是否推荐', 'is_recommended'); ?>
@@ -59,3 +58,7 @@
 		</div>
 	</fieldset>
 <?php echo Form::close(); ?>
+
+<script type="text/javascript">
+    window.upload_url = '<?php echo Uri::create('admin/softwares/upload'); ?>';
+</script>

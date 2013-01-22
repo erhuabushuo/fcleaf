@@ -5,6 +5,7 @@
 	<title><?php echo $title; ?> - 祥非常电脑</title>
 	<?php echo Asset::css('bootstrap.css'); ?>
 	<?php echo Asset::css('admin.css') ?>
+        <?php echo Asset::css('uploadify.css') ?>
 	<style>
 		body { margin: 50px; }
 	</style>

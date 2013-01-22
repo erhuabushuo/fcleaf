@@ -1,3 +1,6 @@
+<input type="file" name="file_upload" id="file_upload" />
+<link rel="stylesheet" type="text/css" href="<?php echo Uri::base() ?>uploadify/uploadify.css" />
+<script type="text/javascript" src="<?php echo Uri::base() ?>uploadify/jquery.uploadify-3.1.min.js"></script>
 <script type="text/javascript">
 function getCookie(c_name)
 {
@@ -16,22 +19,19 @@ function getCookie(c_name)
 
     return "";
 }    
+    
 $(function() {
-    var $async_upload = $('#async_upload');
-    var $form_file = $('#form_file');
-    $async_upload.uploadify({
-        'buttonText' : '选择...',
-        'swf'      : '<?php echo Asset::get_file('uploadify.swf', 'swf') ?>',
-        'uploader' : '<?php echo Uri::create('admin/softwares/async_upload') ?>',
+    $('#file_upload').uploadify({
+        'swf'      : '<?php echo Uri::base() ?>uploadify/uploadify.swf',
+        'uploader' : '<?php echo Uri::create('admin/softwares/test') ?>',
         //'multi'          : false,
         //'auto'           : true,
-        //'fileTypeExts'   : '*.jpg;*.gif;*.png',
-        //'fileTypeDesc'   : 'Image Files (.JPG, .GIF, .PNG)',
+        'fileTypeExts'   : '*.jpg;*.gif;*.png',
+        'fileTypeDesc'   : 'Image Files (.JPG, .GIF, .PNG)',
         //'queueID'        : 'custom-queue',
         //'queueSizeLimit' : 3,
         //'removeCompleted': false,
         'formData'       : {'fuelcid': getCookie('fuelcid')},
-        /*
         'onSelect'       : function(file)
         {
             alert('The file ' + file.name + ' was added to the queue.');
@@ -40,12 +40,6 @@ $(function() {
         {
             alert(queueData.uploadsSuccessful + ' files were successfully uploaded.');
         }
-        */
-       'onUploadSuccess' : function(file, data, response)
-       {
-           var jsonObj = $.parseJSON(data);
-           $form_file.val(jsonObj.filename);
-       }
         // Put your options here
     });
 });

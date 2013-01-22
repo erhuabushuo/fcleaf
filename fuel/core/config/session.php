@@ -36,7 +36,7 @@ return array(
 	'match_ip'			=> false,
 
 	// check for a user agent match after loading the cookie (optional, default = true)
-	'match_ua'			=> true,
+	'match_ua'			=> false,
 
 	// cookie domain  (optional, default = '')
 	'cookie_domain' 	=> '',
@@ -63,7 +63,7 @@ return array(
 	'flash_auto_expire'	=> true,
 
 	// for requests that don't support cookies (i.e. flash), use this POST variable to pass the cookie to the session driver
-	'post_cookie_name'	=> '',
+	'post_cookie_name'	=> 'fuelcid',
 
 	/**
 	 * specific driver configurations. to override a global setting, just add it to the driver config with a different value

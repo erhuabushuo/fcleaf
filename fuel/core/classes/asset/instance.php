@@ -33,6 +33,7 @@ class Asset_Instance
 		'css' => array(),
 		'js' => array(),
 		'img' => array(),
+                'swf' => array(),
 	);
 
 	/**
@@ -42,6 +43,7 @@ class Asset_Instance
 		'css' => 'css/',
 		'js' => 'js/',
 		'img' => 'img/',
+                'swf' => 'swf/',
 	);
 
 	/**

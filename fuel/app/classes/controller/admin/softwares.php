@@ -2,10 +2,6 @@
 class Controller_Admin_Softwares extends Controller_Admin 
 {
 
-        public function action_testupload()
-        {
-            return new Response(1);
-        }
     
 	public function action_upload()
 	{
@@ -51,7 +47,7 @@ class Controller_Admin_Softwares extends Controller_Admin
         public function action_async_upload()
         {
                 $path = DOCROOT . DS . 'upload' . DS .'storehouse';
-                $subdir = date("Y-M-d");
+                $subdir = date("Y-m-d");
                 $subpath = $path . DS . $subdir;
 		if (!is_dir($path))
 		{
@@ -73,7 +69,7 @@ class Controller_Admin_Softwares extends Controller_Admin
 		$config = array(
 				'path'		 => $subpath,
 				'randomize' => true,
-				'ext_whitelist' => array('img', 'jpg', 'jpeg', 'gif', 'png'),
+				//'ext_whitelist' => array('img', 'jpg', 'jpeg', 'gif', 'png'),
 		);
 	
 		Upload::process($config);
@@ -85,7 +81,7 @@ class Controller_Admin_Softwares extends Controller_Admin
 			$filename = $fileinfo['saved_as'];
 	
 			$result = array(
-					'filename' => $subdir . DS . $filename,
+					'filename' => DS . 'upload' . DS . 'storehouse' .  DS . $subdir . DS . $filename,
 					'urlpath'  => Uri::base() . DS . 'upload' . DS .  'storehouse' . DS . $subdir . DS . $filename,
 			);
 		}
@@ -93,17 +89,19 @@ class Controller_Admin_Softwares extends Controller_Admin
 		return new Response(json_encode($result));
         }
         
-        public function action_test()
-        {
-            $data = array();
-            $this->template->title = "测试上传";
-            $this->template->content = View::forge("admin/softwares/test", $data);
-        }
 	
 	public function action_index()
 	{
-		$data['softwares'] = Model_Software::find('all');
-		$this->template->title = "Softwares";
+                $config = array(
+				'pagination_url' => \Uri::base().'admin/products/index/',
+				'total_items' => Model_Product::find()->count(),
+				'per_page' => 20,
+				'uri_segment' => 4,
+		);
+		$pagination = Pagination::forge('pagination', $config);
+		$data['softwares'] = Model_Software::find()->related('category')->order_by('id', 'desc')->limit($pagination->per_page)->offset($pagination->offset)->get();
+		$this->template->set_global('pagination', $pagination->render(), false);
+		$this->template->title = "软件";
 		$this->template->content = View::forge('admin/softwares/index', $data);
 
 	}
@@ -128,21 +126,21 @@ class Controller_Admin_Softwares extends Controller_Admin
 					'title' => Input::post('title'),
 					'category_id' => Input::post('category_id'),
 					'file' => Input::post('file'),
-					'is_recommended' => Input::post('is_recommended'),
+					'is_recommended' => Input::post('is_recommended', 0) == 0 ? 0 : 1,
 					'img' => Input::post('img'),
 					'summary' => Input::post('summary'),
 				));
 
 				if ($software and $software->save())
 				{
-					Session::set_flash('success', e('Added software #'.$software->id.'.'));
+					Session::set_flash('success', e('成功添加软件 #'.$software->title.'.'));
 
 					Response::redirect('admin/softwares');
 				}
 
 				else
 				{
-					Session::set_flash('error', e('Could not save software.'));
+					Session::set_flash('error', e('无法保存产品.'));
 				}
 			}
 			else
@@ -153,7 +151,7 @@ class Controller_Admin_Softwares extends Controller_Admin
 		Package::load('CKEditor');
 		$categories = Model_Category::getAllCategories(array_search('软件', Model_Category::$_types))->as_array();
 		$this->template->set_global('categories', $categories, false);
-                $scripts = Asset::js(array('ajaxupload.js', 'swfupload.js', 'jquery-asyncUpload-0.1.js','my.js'));
+                $scripts = Asset::js(array('ajaxupload.js', 'jquery.uploadify-3.1.min.js','my.js'));
                 $upload_js = View::forge('admin/softwares/async_upload');
                 $all_scripts = $scripts . $upload_js;
 		$this->template->set_global('scripts', $all_scripts, false);
@@ -172,20 +170,20 @@ class Controller_Admin_Softwares extends Controller_Admin
 			$software->title = Input::post('title');
 			$software->category_id = Input::post('category_id');
 			$software->file = Input::post('file');
-			$software->is_recommended = Input::post('is_recommended');
+			$software->is_recommended = Input::post('is_recommended', 0) == 0 ? 0 : 1;
 			$software->img = Input::post('img');
 			$software->summary = Input::post('summary');
 
 			if ($software->save())
 			{
-				Session::set_flash('success', e('Updated software #' . $id));
+				Session::set_flash('success', e('成功更新软件 #' . $software->title));
 
 				Response::redirect('admin/softwares');
 			}
 
 			else
 			{
-				Session::set_flash('error', e('Could not update software #' . $id));
+				Session::set_flash('error', e('无法更新软件 #' . $software->title));
 			}
 		}
 
@@ -205,8 +203,14 @@ class Controller_Admin_Softwares extends Controller_Admin
 
 			$this->template->set_global('software', $software, false);
 		}
-
-		$this->template->title = "Softwares";
+                Package::load('CKEditor');
+		$categories = Model_Category::getAllCategories(array_search('软件', Model_Category::$_types))->as_array();
+		$this->template->set_global('categories', $categories, false);
+                $scripts = Asset::js(array('ajaxupload.js', 'jquery.uploadify-3.1.min.js','my.js'));
+                $upload_js = View::forge('admin/softwares/async_upload');
+                $all_scripts = $scripts . $upload_js;
+		$this->template->set_global('scripts', $all_scripts, false);
+		$this->template->title = "软件";
 		$this->template->content = View::forge('admin/softwares/edit');
 
 	}

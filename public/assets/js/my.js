@@ -1,10 +1,10 @@
 jQuery(function($) {
-	
+        
 	var $upload_info = $('#upload_info');
 	$upload_info.popover();
 	
 	new AjaxUpload('upload_button', {
-		action: 'upload',
+		action: window.upload_url || 'upload', //TODO BUG
 		name: 'userfile',
 		autoSubmit: true,
 		responseType: 'json',

@@ -51,3 +51,7 @@
 		</div>
 	</fieldset>
 <?php echo Form::close(); ?>
+
+<script type="text/javascript">
+    window.upload_url = '<?php echo Uri::create('admin/articles/upload'); ?>';
+</script>
